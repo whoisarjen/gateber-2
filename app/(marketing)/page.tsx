@@ -41,7 +41,7 @@ export default async function IndexPage() {
             className="animate-fade-up text-balance font-urban text-4xl font-extrabold tracking-tight opacity-0 sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
           >
-            Odkrywaj, Twórz i Dyskutuj na każdy temat z{" "}
+            Odkrywaj, Twórz i Dyskutuj na Każdy Temat w{" "}
             <span className="text-gradient_indigo-purple font-extrabold">
               Gateber
             </span>
@@ -54,13 +54,24 @@ export default async function IndexPage() {
             Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Nasza platforma oferuje innowacyjne rozwiązania dla twórców treści oraz odbiorców.
           </p>
 
-          <div
-            className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
-            style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
-          >
-            <Link href="/pricing" className={cn(buttonVariants({ size: "lg" }))}>
-              Dołącz do Gateber
-            </Link>
+          <div className="flex gap-6">
+            <div
+              className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
+              style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
+            >
+              <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
+                Dołącz do Gateber
+              </Link>
+            </div>
+
+            <div
+              className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
+              style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
+            >
+              <Link href="#" className={cn(buttonVariants({ size: "lg", variant: 'outline' }))}>
+                Dowied się więcej
+              </Link>
+            </div>
           </div>
         </div>
       </section>

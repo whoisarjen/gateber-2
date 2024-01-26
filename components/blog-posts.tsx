@@ -6,7 +6,7 @@ export function BlogPosts({ posts }) {
   return (
     <div className="container space-y-10 py-6 md:py-10">
       <section>
-        <h2 className="mb-4 font-heading text-3xl">Last Post</h2>
+        <h2 className="mb-4 font-heading text-3xl">Najnowszy wpis</h2>
         <article className="relative grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
             {posts[0].image && (
@@ -36,7 +36,7 @@ export function BlogPosts({ posts }) {
       </section>
 
       <section>
-        <h2 className="mb-4 font-heading text-3xl">Blog Posts</h2>
+        <h2 className="mb-4 font-heading text-3xl">Sprawdź pozostałe</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.slice(1).map((post) => (
             <article key={post._id} className="group relative flex flex-col space-y-2">
@@ -59,7 +59,7 @@ export function BlogPosts({ posts }) {
                 </p>
               )}
               <Link href={post.slug} className="absolute inset-0">
-                <span className="sr-only">View Article</span>
+                <span className="sr-only">Zobacz wpis</span>
               </Link>
             </article>
           ))}

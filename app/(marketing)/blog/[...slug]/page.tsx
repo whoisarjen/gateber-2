@@ -9,7 +9,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { env } from "@/env.mjs"
-import { absoluteUrl, cn, formatDate } from "@/lib/utils"
+import { absoluteUrl, cn, formatDateWithTime } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/shared/icons"
 
@@ -104,7 +104,7 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
       >
         <Icons.chevronLeft className="mr-2 size-4" />
-        See all posts
+        Zobacz pozostałe
       </Link>
       <div>
         {post.date && (
@@ -112,7 +112,7 @@ export default async function PostPage({ params }: PostPageProps) {
             dateTime={post.date}
             className="block text-sm text-muted-foreground"
           >
-            Published on {formatDate(post.date)}
+            Ostatnia akutalizacja dnia {formatDateWithTime(post.date)}
           </time>
         )}
         <h1 className="mt-2 inline-block text-balance font-heading text-4xl leading-tight lg:text-5xl">
@@ -161,7 +161,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <div className="flex justify-center py-6 lg:py-10">
         <Link href="/blog" className={cn(buttonVariants({ variant: "ghost" }))}>
           <Icons.chevronLeft className="mr-2 size-4" />
-          See all posts
+          Zobacz pozostałe
         </Link>
       </div>
     </article>
