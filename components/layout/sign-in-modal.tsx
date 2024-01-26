@@ -20,10 +20,9 @@ export const SignInModal = () => {
           <a href={siteConfig.url}>
             <Icons.logo className="size-10" />
           </a>
-          <h3 className="font-urban text-2xl font-bold">Sign In</h3>
+          <h3 className="font-urban text-2xl font-bold">Zaloguj się</h3>
           <p className="text-sm text-gray-500">
-            This is strictly for demo purposes - only your email and profile
-            picture will be stored.
+            Gateber wspiera szybką rejestrację za pomocą dostawców danych. Wystarczą dwa kliknięcia, bez żmudnego podawania danych.
           </p>
         </div>
 
@@ -46,7 +45,7 @@ export const SignInModal = () => {
             ) : (
               <Icons.google className="mr-2 size-4" />
             )}{" "}
-            Sign In with Google
+            Zaloguj się za pomocą Google
           </Button>
         </div>
       </div>

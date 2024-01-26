@@ -70,7 +70,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         >
           <div className="flex items-center space-x-2.5">
             <LogOut className="size-4" />
-            <p className="text-sm">Log out </p>
+            <p className="text-sm">Wyloguj</p>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

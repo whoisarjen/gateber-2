@@ -102,13 +102,13 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
                       variant: 'default',
                     })}
                   >
-                    Go to dashboard
+                    Idź do panelu
                   </Link>
                 ) : (
                   <BillingFormButton year={isYearly} offer={offer} subscriptionPlan={subscriptionPlan} />
                 )
               ) : (
-                <Button onClick={signInModal.onOpen}>Sign in</Button>
+                <Button onClick={signInModal.onOpen}>Zaloguj się</Button>
               )}
 
             </div>

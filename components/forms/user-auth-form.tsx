@@ -88,8 +88,8 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
               <Icons.spinner className="mr-2 size-4 animate-spin" />
             )}
             {type === "register"
-              ? "Sign Up with Email"
-              : "Sign In with Email"}
+              ? "Zarejestruj się za pomocą Email"
+              : "Zaloguj się za pomocą Email"}
           </button>
         </div>
       </form>
@@ -99,7 +99,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
+            lub
           </span>
         </div>
       </div>

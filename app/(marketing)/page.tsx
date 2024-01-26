@@ -34,14 +34,14 @@ export default async function IndexPage() {
             style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
             target="_blank"
           >
-            Introducing on <Icons.twitter className="ml-2 size-4" />
+            Obserwuj nas na <Icons.twitter className="ml-2 size-4" />
           </Link>
 
           <h1
             className="animate-fade-up text-balance font-urban text-4xl font-extrabold tracking-tight opacity-0 sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
           >
-            Kick off with a bang with{" "}
+            Odkrywaj, Twórz i Dyskutuj na każdy temat z{" "}
             <span className="text-gradient_indigo-purple font-extrabold">
               Gateber
             </span>
@@ -51,7 +51,7 @@ export default async function IndexPage() {
             className="max-w-[42rem] animate-fade-up text-balance leading-normal text-muted-foreground opacity-0 sm:text-xl sm:leading-8"
             style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
           >
-            Build your next project using Next.js 14, Prisma, Planetscale, Auth.js, Resend, React Email, Shadcn/ui, Stripe.
+            Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Nasza platforma oferuje innowacyjne rozwiązania dla twórców treści oraz odbiorców.
           </p>
 
           <div
@@ -59,19 +59,7 @@ export default async function IndexPage() {
             style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
           >
             <Link href="/pricing" className={cn(buttonVariants({ size: "lg" }))}>
-              Go Pricing
-            </Link>
-            <Link
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-4")}
-            >
-              <Icons.gitHub className="mr-2 size-4" />
-              <p>
-                <span className="hidden sm:inline-block">Star on</span>{" "}GitHub{" "}
-                <span className="font-semibold">{nFormatter(stars)}</span>
-              </p>
+              Dołącz do Gateber
             </Link>
           </div>
         </div>
@@ -82,7 +70,7 @@ export default async function IndexPage() {
         style={{ animationDelay: "0.55s", animationFillMode: "forwards" }}
       >
         <div className="container mx-auto">
-          <h2 className="text-center text-sm font-semibold uppercase">Powered by</h2>
+          <h2 className="text-center text-sm font-semibold uppercase">Dumnie wpierani przez</h2>
 
           <div className="my-7 flex flex-wrap items-center justify-center gap-10 gap-y-8 lg:gap-14">
             {features.map((feature) => (
