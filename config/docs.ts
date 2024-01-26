@@ -1,16 +1,8 @@
 import { DocsConfig } from "types"
+import { defaultConfig } from "./default"
 
 export const docsConfig: DocsConfig = {
-  mainNav: [
-    {
-      title: "Dokumentacja",
-      href: "/docs",
-    },
-    {
-      title: "Poradniki",
-      href: "/guides",
-    },
-  ],
+  mainNav: defaultConfig.mainNav,
   sidebarNav: [
     {
       title: "Getting Started",
