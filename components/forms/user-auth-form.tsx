@@ -61,7 +61,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
@@ -102,7 +102,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             lub
           </span>
         </div>
-      </div>
+      </div> */}
       <button
         type="button"
         className={cn(buttonVariants({ variant: "outline" }))}

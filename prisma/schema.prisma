@@ -11,6 +11,20 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Post {
+  id                String   @id @default(cuid())
+  userId            String
+  title             String
+  content           String
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map(name: "posts")
+}
+
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -56,6 +70,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  posts    Post[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")

@@ -32,9 +32,9 @@ export default function LoginPage() {
           <h1 className="text-2xl font-semibold tracking-tight">
             Witaj ponownie
           </h1>
-          <p className="text-sm text-muted-foreground">
+          {/* <p className="text-sm text-muted-foreground">
             Podaj swój email, aby zalogować się do konta
-          </p>
+          </p> */}
         </div>
         <UserAuthForm />
         <p className="px-8 text-center text-sm text-muted-foreground">
