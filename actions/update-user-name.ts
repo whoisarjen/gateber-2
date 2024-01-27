@@ -1,10 +1,10 @@
 "use server";
 
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { userNameSchema } from "@/lib/validations/user";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { db } from "@/server/db"
 
 export type FormData = {
   name: string;
@@ -21,7 +21,7 @@ export async function updateUserName(userId: string, data: FormData) {
     const { name } = userNameSchema.parse(data);
 
     // Update the user name.
-    await prisma.user.update({
+    await db.user.update({
       where: {
         id: userId,
       },

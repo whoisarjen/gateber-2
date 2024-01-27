@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { buttonVariants } from "@/components/ui/button"
 import { DashboardHeader } from '../dashboard/header'
 import { DashboardShell } from '../dashboard/shell'
+import { react } from '@/app/_trpc/client'
 
 type EditorProps = {
   post?: Post
@@ -20,6 +21,9 @@ export const Editor = ({
   post,
 }: EditorProps) => {
   const router = useRouter()
+  const getTodos = react.getTodos.useQuery()
+  const addTodo = react.addTodo.useMutation()
+  console.log(getTodos.data, addTodo)
   //   const createPost = api.post.create.useMutation({
   //     onSuccess: (post) => {
   //       router.push(`/dashboard/edit/${post.id}`)
@@ -41,7 +45,7 @@ export const Editor = ({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
       title: post?.title ?? '',
-      //   isPublic: post?.isPublic ?? false,
+      isPublic: post?.isPublic ?? false,
       content: (post?.content ?? {}) as unknown as any,
     },
   })
@@ -146,28 +150,12 @@ export const Editor = ({
         </p>
       ))}
       <DashboardHeader heading="Tworzenie wpisy" text="Domyślnie wpis jest niepubliczny. Musisz znienić jego ustawienia widoczności w trakcie edytowania.">
-        <button className={buttonVariants({})}>
+        <button
+          onClick={() => addTodo.mutate("5")}
+          className={buttonVariants({})}
+        >
           Zapisz
         </button>
-        {/* {!!post &&
-            <div>
-              <Controller
-                control={control}
-                name="isPublic"
-                render={({ field: { onChange, value } }) => (
-                  <FormControlLabel
-                    control={<Switch
-                      checked={value}
-                      onChange={onChange}
-                      color="primary"
-                    />}
-                    label={value ? 'Publiczny' : 'Prywatny'}
-                    labelPlacement="start"
-                  />
-                )}
-              />
-            </div>
-          } */}
       </DashboardHeader>
       <form
         id='subreddit-post-form'

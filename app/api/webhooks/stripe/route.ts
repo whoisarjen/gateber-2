@@ -2,7 +2,7 @@ import { headers } from "next/headers"
 import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
-import { prisma } from "@/lib/db"
+import { db } from "@/server/db"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     // Update the user stripe into in our database.
     // Since this is the initial subscription, we need to update
     // the subscription id and customer id.
-    await prisma.user.update({
+    await db.user.update({
       where: {
         id: session?.metadata?.userId,
       },
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     )
 
     // Update the price id and set the new period end.
-    await prisma.user.update({
+    await db.user.update({
       where: {
         stripeSubscriptionId: subscription.id,
       },

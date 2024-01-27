@@ -51,7 +51,7 @@ export default async function IndexPage() {
             className="max-w-[42rem] animate-fade-up text-balance leading-normal text-muted-foreground opacity-0 sm:text-xl sm:leading-8"
             style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
           >
-            Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Nasza platforma oferuje innowacyjne rozwiązania dla twórców treści oraz odbiorców.
+            Teraz masz szansę przekształcić swoją pasję, umiejętności i treści w realne zarobki. Gateber oferuje innowacyjne rozwiązania dla twórców treści oraz odbiorców.
           </p>
 
           <div className="flex gap-6">

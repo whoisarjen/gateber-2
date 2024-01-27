@@ -8,6 +8,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import TRPCProvider from "./_trpc/Provider";
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -74,11 +75,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-          <Analytics />
-          <Toaster />
-          <ModalProvider />
-          <TailwindIndicator />
+          <TRPCProvider>
+            {children}
+            <Analytics />
+            <Toaster />
+            <ModalProvider />
+            <TailwindIndicator />
+          </TRPCProvider>
         </ThemeProvider>
       </body>
     </html>

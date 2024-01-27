@@ -6,11 +6,11 @@ import GoogleProvider from "next-auth/providers/google"
 import { siteConfig } from "@/config/site"
 import MagicLinkEmail from "@/emails/magic-link-email"
 import { env } from "@/env.mjs"
-import { prisma } from "@/lib/db"
 import { resend } from "./email"
+import { db } from "@/server/db"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
   },
@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
     }),
     EmailProvider({
       sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const user = await prisma.user.findUnique({
+        const user = await db.user.findUnique({
           where: {
             email: identifier,
           },
@@ -55,7 +55,6 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
-          // console.log(result)
         } catch (error) {
           throw new Error("Failed to send verification email.")
         }
@@ -63,7 +62,8 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token, session }) {
+    async session({ token, session, user }) {
+      console.log({ token, session, user })
       if (token) {
         session.user.id = token.id
         session.user.name = token.name
@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
-      const dbUser = await prisma.user.findFirst({
+      const dbUser = await db.user.findFirst({
         where: {
           email: token.email,
         },
