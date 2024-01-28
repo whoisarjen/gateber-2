@@ -9,6 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useSigninModal } from "@/hooks/use-signin-modal";
+import { ModeToggle } from "./mode-toggle";
 
 
 interface NavBarProps {
@@ -35,6 +36,8 @@ export function NavBar({ user, items, children, rightElements, scroll = false }:
 
           <div className="flex items-center space-x-3">
             {rightElements}
+
+            <ModeToggle />
 
             {!user ? (
               <Link
