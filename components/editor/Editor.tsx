@@ -12,6 +12,11 @@ import { buttonVariants } from "@/components/ui/button"
 import { DashboardHeader } from '../dashboard/header'
 import { DashboardShell } from '../dashboard/shell'
 import { react } from '@/app/_trpc/client'
+import { revalidatePath } from 'next/cache'
+import { toast } from '../ui/use-toast'
+import { ReloadIcon } from "@radix-ui/react-icons"
+import { Button } from "@/components/ui/button"
+import { getPostSlug } from '@/utils/post.utils'
 
 type EditorProps = {
   post?: Post
@@ -21,14 +26,14 @@ export const Editor = ({
   post,
 }: EditorProps) => {
   const router = useRouter()
-  const getTodos = react.getTodos.useQuery()
-  const addTodo = react.addTodo.useMutation()
-  console.log(getTodos.data, addTodo)
-  //   const createPost = api.post.create.useMutation({
-  //     onSuccess: (post) => {
-  //       router.push(`/dashboard/edit/${post.id}`)
-  //     },
-  //   });
+
+  // @ts-ignore
+  const createPost = react.posts.create.useMutation({
+    onSuccess: (post) => {
+      revalidatePath('/dashboard')
+      router.push(`/dashboard/edit/${getPostSlug(post)}`)
+    }
+  })
 
   //   const updatePost = api.post.update.useMutation({
   //     onSuccess: (post) => {
@@ -78,6 +83,18 @@ export const Editor = ({
   }, [post?.id])
 
   useEffect(() => {
+    if (Object.keys(errors).length) {
+      for (const [_key, value] of Object.entries(errors)) {
+        value
+        toast({
+          title: 'Coś poszło nie tak.',
+          description: (value as { message: string }).message,
+        })
+      }
+    }
+  }, [errors])
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMounted(true)
     }
@@ -118,11 +135,10 @@ export const Editor = ({
       return
     }
 
-    // customRevalidatePath('/dashboard/create')
-    // createPost.mutate({
-    //   ...data,
-    //   content,
-    // })
+    createPost.mutate({
+      ...data,
+      content,
+    })
   }
 
   if (!isMounted) {
@@ -141,21 +157,16 @@ export const Editor = ({
 
   return (
     <DashboardShell>
-      {Object.values(errors).map(({ type, message }: any) => (
-        <p
-          key={type}
-          className="text-warning"
-        >
-          {message}
-        </p>
-      ))}
       <DashboardHeader heading="Tworzenie wpisy" text="Domyślnie wpis jest niepubliczny. Musisz znienić jego ustawienia widoczności w trakcie edytowania.">
-        <button
-          onClick={() => addTodo.mutate("5")}
+        <Button
+          onClick={handleSubmit(onSubmit)}
           className={buttonVariants({})}
         >
-          Zapisz
-        </button>
+          {true
+            ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            : 'Zapisz'
+          }
+        </Button>
       </DashboardHeader>
       <form
         id='subreddit-post-form'

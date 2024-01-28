@@ -63,7 +63,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session, user }) {
-      console.log({ token, session, user })
       if (token) {
         session.user.id = token.id
         session.user.name = token.name
@@ -88,10 +87,8 @@ export const authOptions: NextAuthOptions = {
       }
 
       return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
         picture: dbUser.image,
+        ...dbUser,
       }
     },
   },
