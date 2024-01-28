@@ -1,7 +1,7 @@
-import { Editor } from "@/components/editor/Editor";
+import { CreatePostEditor } from "@/containers/CreatePostEditor";
 
-export default async function PostsCreate () {
+export default async function DashboardPostsCreate () {
     return (
-        <Editor />
+        <CreatePostEditor />
     )
 }

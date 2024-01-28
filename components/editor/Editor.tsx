@@ -1,54 +1,38 @@
 'use client'
 
 import EditorJS, { type OutputData } from '@editorjs/editorjs'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { type Post } from '@prisma/client'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from "react-hook-form"
-import { type CreatePostSchema, createPostSchema } from '@/schemas/posts.schema'
+import { type MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
+import { type UseFormReturn } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
-import { buttonVariants } from "@/components/ui/button"
-import { DashboardHeader } from '../dashboard/header'
-import { DashboardShell } from '../dashboard/shell'
-import { react } from '@/app/_trpc/client'
-import { revalidatePath } from 'next/cache'
 import { toast } from '../ui/use-toast'
-import { ReloadIcon } from "@radix-ui/react-icons"
-import { Button } from "@/components/ui/button"
-import { getPostSlug } from '@/utils/post.utils'
 
 type EditorProps = {
   post?: Post
-}
+  handleSubmit: VoidFunction
+  editorRef: MutableRefObject<EditorJS | undefined>
+} & UseFormReturn<{
+  title: string;
+  content: {} & {
+      [k: string]: any;
+  };
+  isPublic: boolean;
+  id?: number
+}, any, undefined>
 
 export const Editor = ({
   post,
+  handleSubmit,
+  editorRef: ref,
+  register,
+  formState: { errors },
 }: EditorProps) => {
-  const router = useRouter()
-
-  const createPost = react.posts.create.useMutation()
-
   //   const updatePost = api.post.update.useMutation({
   //     onSuccess: (post) => {
   //       router.push(getHrefToPost(post))
   //     },
   //   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreatePostSchema>({
-    criteriaMode: "all",
-    resolver: zodResolver(createPostSchema),
-    defaultValues: {
-      title: post?.title ?? '',
-      isPublic: post?.isPublic ?? false,
-      content: (post?.content ?? {}) as unknown as any,
-    },
-  })
-  const ref = useRef<EditorJS>()
   const _titleRef = useRef<HTMLTextAreaElement>(null)
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
@@ -83,6 +67,7 @@ export const Editor = ({
         toast({
           title: 'Coś poszło nie tak.',
           description: (value as { message: string }).message,
+          variant: "destructive",
         })
       }
     }
@@ -113,39 +98,30 @@ export const Editor = ({
     }
   }, [isMounted, initializeEditor])
 
-  const onSubmit = async (data: CreatePostSchema) => {
-    const content = await ref.current?.save() as unknown as CreatePostSchema["content"]
+  // const onSubmit = async (data: CreatePostSchema) => {
+  //   const content = await ref.current?.save() as unknown as CreatePostSchema["content"]
 
-    if (post) {
-      const update = {
-        ...post,
-        ...data,
-        content,
-      }
+  //   if (post) {
+  //     const update = {
+  //       ...post,
+  //       ...data,
+  //       content,
+  //     }
 
-      //   updatePost.mutate(update)
-      //   customRevalidatePath('/dashboard/edit/[postId]')
-      //   customRevalidatePath(getHrefToPost(update))
-      return
-    }
+  //     return
+  //   }
 
-    await createPost.mutateAsync({
-      ...data,
-      content,
-    },
-    {
-      onSuccess: (post) => {
-        console.log({ post })
-        revalidatePath('/dashboard/posts', 'page')
-        router.push(`/dashboard/edit/${getPostSlug(post)}`)
-      }
-    })
-      // .then(post => {
-      //   console.log({ post })
-      //   revalidatePath('/dashboard/posts')
-      //   router.push(`/dashboard/edit/${getPostSlug(post)}`)
-      // })
-  }
+  //   await createPost.mutateAsync({
+  //     ...data,
+  //     content,
+  //   },
+  //   {
+  //     onSuccess: (post) => {
+  //       customRevalidatePath('/dashboard/posts')
+  //       router.push(`/dashboard/posts/${getPostSlug(post)}`)
+  //     }
+  //   })
+  // }
 
   if (!isMounted) {
     return null
@@ -162,35 +138,22 @@ export const Editor = ({
   const { ref: titleRef, ...rest } = register('title')
 
   return (
-    <DashboardShell>
-      <DashboardHeader heading="Tworzenie wpisy" text="Domyślnie wpis jest niepubliczny. Musisz znienić jego ustawienia widoczności w trakcie edytowania.">
-        <Button
-          onClick={handleSubmit(onSubmit)}
-          className={buttonVariants({})}
-        >
-          {createPost.isPending
-            ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-            : 'Zapisz'
-          }
-        </Button>
-      </DashboardHeader>
-      <form
-        id='subreddit-post-form'
-        className='prose-xl flex-1'
-        onSubmit={handleSubmit(onSubmit)}>
-        <Textarea
-          ref={(e: any) => {
-            titleRef(e)
-            // @ts-expect-error it's fine, trust me!
-            _titleRef.current = e
-          }}
-          {...rest}
-          onInput={auto_grow}
-          placeholder='Tytuł wpisu'
-          className='reset-textarea w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold'
-        />
-        <div id='editor' />
-      </form>
-    </DashboardShell>
+    <form
+      id='subreddit-post-form'
+      className='prose-xl flex-1'
+      onSubmit={handleSubmit}>
+      <Textarea
+        ref={(e: any) => {
+          titleRef(e)
+          // @ts-expect-error it's fine, trust me!
+          _titleRef.current = e
+        }}
+        {...rest}
+        onInput={auto_grow}
+        placeholder='Tytuł wpisu'
+        className='reset-textarea w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold'
+      />
+      <div id='editor' />
+    </form>
   )
 }

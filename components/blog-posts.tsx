@@ -1,12 +1,21 @@
 import { formatDate } from '@/lib/utils';
+import { transformDate } from '@/utils/global.utils';
+import { type Post } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export function BlogPosts({ posts }) {
+type BlogPostsProps = {
+  posts: Post[]
+}
+
+export function BlogPosts({
+  posts: postsRaw,
+}: BlogPostsProps) {
+  const posts = postsRaw.map(post => ({ ...post, image: 'https://lh3.googleusercontent.com/a/ACg8ocIZoVZYjP0T7CITvnawfqsR8hCGyRc3R66duyET1QNnxmBL=s96-c', description: '', slug: '' }))
   return (
     <div className="container space-y-10 py-6 md:py-10">
       <section>
-        <h2 className="mb-4 font-heading text-3xl">Najnowszy wpis</h2>
+        <h2 className="mb-4 font-heading text-3xl">Polecany wpis</h2>
         <article className="relative grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
             {posts[0].image && (
@@ -39,7 +48,7 @@ export function BlogPosts({ posts }) {
         <h2 className="mb-4 font-heading text-3xl">Sprawdź pozostałe</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.slice(1).map((post) => (
-            <article key={post._id} className="group relative flex flex-col space-y-2">
+            <article key={post.id} className="group relative flex flex-col space-y-2">
               {post.image && (
                 <Image
                   alt={post.title}
@@ -53,11 +62,9 @@ export function BlogPosts({ posts }) {
               {post.description && (
                 <p className="line-clamp-1 text-muted-foreground">{post.description}</p>
               )}
-              {post.date && (
-                <p className="text-sm text-muted-foreground">
-                  {formatDate(post.date)}
-                </p>
-              )}
+              <p className="text-sm text-muted-foreground">
+                {transformDate(post.updatedAt)}
+              </p>
               <Link href={post.slug} className="absolute inset-0">
                 <span className="sr-only">Zobacz wpis</span>
               </Link>

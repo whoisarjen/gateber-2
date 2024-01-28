@@ -8,7 +8,7 @@ import Link from "next/link"
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Panel" text="Twórz i zarządzaj swoimi postami.">
+      <DashboardHeader heading="Panel" text="Twórz i zarządzaj swoimi wpisami.">
         <Link
           href="/dashboard/posts/create"
           className={cn(

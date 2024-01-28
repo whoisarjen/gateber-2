@@ -1,7 +1,8 @@
-import { createPostSchema } from "@/schemas/posts.schema";
+import { createPostSchema, updatePostSchema } from "@/schemas/posts.schema";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { db } from "../db";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 export const postsRouter = router({
     create: protectedProcedure
@@ -13,69 +14,45 @@ export const postsRouter = router({
             //     throw new Error("Daily create limit reached");
             // }
 
-            return await db.post.create({
+            const createdPost = await db.post.create({
                 data: {
                     ...input,
                     user: { connect: { id: ctx.session.user.id } },
                 },
             })
+
+            revalidatePath('/dashboard/posts')
+            return createdPost
         }),
 
-//   update: protectedProcedure
-//     .input(updatePostSchema)
-//     .mutation(async ({ ctx, input: { id, ...data } }) => {
-//       return await db.post.update({
-//         where: {
-//           id,
-//           userId: ctx.session.user.id,
-//         },
-//         data,
-//       });
-//     }),
+  update: protectedProcedure
+    .input(updatePostSchema)
+    .mutation(async ({ ctx, input: { id, ...data } }) => {
+      const updatedPost = await db.post.update({
+        where: {
+          id,
+          userId: ctx.session.user.id,
+        },
+        data,
+      });
 
-//     getEditPost: protectedProcedure
-//       .input(z.object({ id: z.number().min(1) }))
-//       .query(async ({ ctx, input: { id } }) => {
-//       return await db.post.findFirstOrThrow({
-//         orderBy: { createdAt: "desc" },
-//         where: {
-//           id,
-//           userId: ctx.session.user.id,
-//         },
-//       });
-//   }),
+      revalidatePath('/dashboard/posts')
+      revalidatePath('/dashboard/posts/[postSlug]')
+      // TODO we also have to revalidatePath to blog/post/postSlug
+      return updatedPost
+    }),
 
-//   getPost: publicProcedure
-//     .input(z.object({
-//       id: z.number().min(1),
-//       isPublic: z.boolean().optional().default(true),
-//       numberOfRelatedPosts: z.number().optional().default(3),
-//     }))
-//     .query(async ({ ctx, input: { id, isPublic, numberOfRelatedPosts } }) => {
-//       const post = await db.post.findFirstOrThrow({
-//         orderBy: { createdAt: "desc" },
-//         include: {
-//           user: {
-//             select: {
-//               id: true,
-//               name: true,
-//               image: true,
-//             }
-//           },
-//         },
-//         where: {
-//           OR: [
-//             {
-//               id,
-//               isPublic,
-//             },
-//             {
-//               id,
-//               userId: ctx.session?.user.id,
-//             },
-//           ]
-//         },
-//       });
+  getPost: publicProcedure
+    .input(z.object({
+      id: z.union([z.string(), z.number()]).pipe(z.coerce.number()),
+    }))
+    .query(async ({ input: { id } }) => {
+      return await db.post.findFirstOrThrow({
+        where: {
+          id,
+        },
+      })
+    }),
 
 //     const relatedPosts = await db.post.findMany({
 //       orderBy: { createdAt: "desc" },
@@ -103,46 +80,6 @@ export const postsRouter = router({
 //       relatedPosts,
 //     }
 //   }),
-
-//   getPostsByUserId: publicProcedure
-//     .input(z.object({
-//       userId: z.string(),
-//       isPublicOnly: z.boolean().optional().default(true),
-//       page: z.number().min(1).optional().default(1),
-//       take: z.number().min(1).max(10).optional().default(10),
-//     }))
-//     .query(async ({ ctx, input: { take, page, userId, isPublicOnly } }) => {
-//       const where = {
-//           ...(isPublicOnly ? { isPublic: true } : {}),
-//           userId,
-//         }
-
-//       const [posts, total] = await db.$transaction([
-//         db.post.findMany({
-//           where,
-//           orderBy: { createdAt: "desc" },
-//           include: {
-//             user: {
-//               select: {
-//                 id: true,
-//                 name: true,
-//               }
-//             },
-//           },
-//           take,
-//           skip: take * (page - 1),
-//         }),
-//         db.post.count({ where }),
-//       ])
-
-//       return {
-//         posts,
-//         page,
-//         take,
-//         pageCount: Math.ceil(total / take),
-//         total,
-//       }
-//     }),
 
     getPosts: publicProcedure
       .input(z.object({

@@ -25,9 +25,7 @@ type DashboardPageProps = {
 }
 
 export default async function DashboardPostsPage({
-  searchParams: {
-    page = '1',
-  },
+  searchParams,
 }: DashboardPageProps) {
   const user = await getCurrentUser()
 
@@ -36,13 +34,14 @@ export default async function DashboardPostsPage({
   }
 
   const {
+    page,
     posts,
     pageCount,
-  } = await api.posts.getPosts({ isOnlyPublic: false, take: 1, page })
+  } = await api.posts.getPosts({ isOnlyPublic: false, page: searchParams.page })
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Panel" text="Twórz i zarządzaj swoimi postami.">
+      <DashboardHeader heading="Panel" text="Twórz i zarządzaj swoimi wpisami.">
         <Link
           href="/dashboard/posts/create"
           className={cn(
@@ -75,7 +74,7 @@ export default async function DashboardPostsPage({
        : (
         <div>
           {posts.map(({ id, title, updatedAt }) => (
-            <Link href={`/dashboard/posts/edit/${getPostSlug({ id, title })}`}>
+            <Link href={`/dashboard/posts/${getPostSlug({ id, title })}`}>
               <Card key={id}>
                 <CardHeader className="gap-2">
                   {title}

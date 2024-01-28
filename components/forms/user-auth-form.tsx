@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useSearchParams } from "next/navigation"
+// import { useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
@@ -31,7 +31,8 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
+  // TODO Make useSearchParams works
+  // const searchParams = useSearchParams()
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
@@ -39,7 +40,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     const signInResult = await signIn("email", {
       email: data.email.toLowerCase(),
       redirect: false,
-      callbackUrl: searchParams?.get("from") || "/dashboard",
+      // callbackUrl: searchParams?.get("from") || "/dashboard",
     })
 
     setIsLoading(false)
