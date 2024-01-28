@@ -14,6 +14,18 @@ import { useRef } from "react";
 import EditorJS from '@editorjs/editorjs'
 import { toast } from "@/components/ui/use-toast";
 import { type Post } from "@prisma/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { useRouter } from "next/navigation";
 
 type UpdatePostEditorProps = {
   post: Post
@@ -22,6 +34,7 @@ type UpdatePostEditorProps = {
 export const UpdatePostEditor = ({
   post,
 }: UpdatePostEditorProps) => {
+    const router = useRouter()
     const editorRef = useRef<EditorJS>()
     const useFormState = useForm<UpdatePostSchema>({
       criteriaMode: "all",
@@ -34,11 +47,12 @@ export const UpdatePostEditor = ({
       },
     })
 
-    const {
-        handleSubmit,
-    } = useFormState
-
     const updatePost = react.posts.update.useMutation()
+    const deletePost = react.posts.delete.useMutation({
+      onSuccess: () => {
+        router.push('/dashboard')
+      }
+    })
 
     const onSubmit = async (data: UpdatePostSchema) => {
       const content = await editorRef.current?.save() as unknown as UpdatePostSchema["content"]
@@ -58,25 +72,64 @@ export const UpdatePostEditor = ({
       })
     }
 
+    const isLoading = updatePost.isPending || deletePost.isPending
+
     return (
         <DashboardShell>
           <DashboardHeader heading="Edytowanie wpisu" text={`Edytujesz wpis "${post.title}"`}>
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              className={buttonVariants({})}
-            >
-              {updatePost.isPending
-                ? <ReloadIcon className="h-4 w-4 animate-spin" />
-                : 'Zapisz'
-              }
-            </Button>
+            <div className="flex gap-2">
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <Button
+                    disabled={isLoading}
+                    className={buttonVariants({ 'variant': 'destructive' })}
+                  >
+                    {isLoading
+                      ? <ReloadIcon className="h-4 w-4 animate-spin" />
+                      : 'Usuń'
+                    }
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Czy chcesz usunąć wpis?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Potwierdzając, usuniesz obecnie edytowany wpis. Ta akcje nie może być cofnięta.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Anuluj</AlertDialogCancel>
+                    <AlertDialogAction
+                      disabled={isLoading}
+                      onClick={() => deletePost.mutate(post)}
+                      className={buttonVariants({ 'variant': 'destructive' })}
+                    >
+                      {isLoading
+                        ? <ReloadIcon className="h-4 w-4 animate-spin" />
+                        : 'Usuń wpis'
+                      }
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <Button
+                disabled={isLoading}
+                onClick={useFormState.handleSubmit(onSubmit)}
+                className={buttonVariants({})}
+              >
+                {isLoading
+                  ? <ReloadIcon className="h-4 w-4 animate-spin" />
+                  : 'Zapisz'
+                }
+              </Button>
+            </div>
           </DashboardHeader>
             {/* @ts-expect-error id might be undefined and its fine */}
             <Editor
                 {...useFormState}
                 post={post}
                 editorRef={editorRef}
-                handleSubmit={() => handleSubmit(onSubmit)}
+                handleSubmit={() => useFormState.handleSubmit(onSubmit)}
             />
         </DashboardShell>
     )

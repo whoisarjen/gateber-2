@@ -5,25 +5,25 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 
 export const postsRouter = router({
-    create: protectedProcedure
-        .input(createPostSchema)
-        .mutation(async ({ ctx, input }) => {
-            // const { isCreateLimit } = await api.post.verifyDailyCreateLimit.query()
+  create: protectedProcedure
+    .input(createPostSchema)
+    .mutation(async ({ ctx, input }) => {
+        // const { isCreateLimit } = await api.post.verifyDailyCreateLimit.query()
 
-            // if (isCreateLimit) {
-            //     throw new Error("Daily create limit reached");
-            // }
+        // if (isCreateLimit) {
+        //     throw new Error("Daily create limit reached");
+        // }
 
-            const createdPost = await db.post.create({
-                data: {
-                    ...input,
-                    user: { connect: { id: ctx.session.user.id } },
-                },
-            })
+        const createdPost = await db.post.create({
+            data: {
+                ...input,
+                user: { connect: { id: ctx.session.user.id } },
+            },
+        })
 
-            revalidatePath('/dashboard/posts')
-            return createdPost
-        }),
+        revalidatePath('/dashboard/posts')
+        return createdPost
+    }),
 
   update: protectedProcedure
     .input(updatePostSchema)
@@ -40,6 +40,22 @@ export const postsRouter = router({
       revalidatePath('/dashboard/posts/[postSlug]')
       // TODO we also have to revalidatePath to blog/post/postSlug
       return updatedPost
+    }),
+
+  delete: protectedProcedure
+    .input(updatePostSchema.pick({ id: true }))
+    .mutation(async ({ ctx, input }) => {
+        const deletePost = await db.post.delete({
+            where: {
+              ...input,
+              userId:  ctx.session.user.id,
+            },
+        })
+
+        revalidatePath('/dashboard/posts')
+        revalidatePath('/dashboard/posts/[postSlug]')
+        // TODO we also have to revalidatePath to blog/post/postSlug
+        return deletePost
     }),
 
   getPost: publicProcedure

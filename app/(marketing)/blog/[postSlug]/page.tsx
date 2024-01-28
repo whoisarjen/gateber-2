@@ -140,7 +140,7 @@ export default async function PostPage({
           priority
         />
       )}
-      <div className="prose-xl max-w-full" key={(post.content as unknown as OutputData)?.time}>
+      <div className="prose max-w-full dark:prose-invert" key={(post.content as unknown as OutputData)?.time}>
         {html.map((item, index) => {
           if (typeof item === "string") {
             return (

@@ -27,12 +27,6 @@ export const Editor = ({
   register,
   formState: { errors },
 }: EditorProps) => {
-  //   const updatePost = api.post.update.useMutation({
-  //     onSuccess: (post) => {
-  //       router.push(getHrefToPost(post))
-  //     },
-  //   });
-
   const _titleRef = useRef<HTMLTextAreaElement>(null)
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
@@ -98,31 +92,6 @@ export const Editor = ({
     }
   }, [isMounted, initializeEditor])
 
-  // const onSubmit = async (data: CreatePostSchema) => {
-  //   const content = await ref.current?.save() as unknown as CreatePostSchema["content"]
-
-  //   if (post) {
-  //     const update = {
-  //       ...post,
-  //       ...data,
-  //       content,
-  //     }
-
-  //     return
-  //   }
-
-  //   await createPost.mutateAsync({
-  //     ...data,
-  //     content,
-  //   },
-  //   {
-  //     onSuccess: (post) => {
-  //       customRevalidatePath('/dashboard/posts')
-  //       router.push(`/dashboard/posts/${getPostSlug(post)}`)
-  //     }
-  //   })
-  // }
-
   if (!isMounted) {
     return null
   }
@@ -140,7 +109,7 @@ export const Editor = ({
   return (
     <form
       id='subreddit-post-form'
-      className='prose-xl flex-1'
+      className='prose flex-1 dark:prose-invert'
       onSubmit={handleSubmit}>
       <Textarea
         ref={(e: any) => {
@@ -151,7 +120,7 @@ export const Editor = ({
         {...rest}
         onInput={auto_grow}
         placeholder='Tytuł wpisu'
-        className='reset-textarea w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold'
+        className='reset-textarea mb-4 h-auto w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold'
       />
       <div id='editor' />
     </form>
