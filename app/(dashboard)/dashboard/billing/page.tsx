@@ -10,8 +10,8 @@ import { Icons } from "@/components/shared/icons"
 import { DashboardShell } from "@/components/dashboard/shell"
 
 export const metadata = {
-  title: "Billing",
-  description: "Manage billing and your subscription plan.",
+  title: "Płatności",
+  description: "Zarządzaj płatnościami oraz subskrypcją.",
 }
 
 export default async function BillingPage() {
@@ -26,8 +26,8 @@ export default async function BillingPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Billing"
-        text="Manage billing and your subscription plan."
+        heading="Płatności"
+        text="Zarządzaj płatnościami oraz subskrypcją."
       />
       <div className="grid gap-8">
         <Alert className="!pl-14">

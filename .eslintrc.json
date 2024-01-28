@@ -12,7 +12,7 @@
     "react/jsx-key": "off",
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "error",
-    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "tailwindcss": {

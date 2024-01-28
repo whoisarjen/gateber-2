@@ -1,6 +1,3 @@
-import { allPosts } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
-
 import { BlogPosts } from "@/components/blog-posts"
 import { api } from "@/app/_trpc/server"
 import { PaginationComponent } from "@/components/shared/PaginationComponent"

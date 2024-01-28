@@ -9,11 +9,11 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard/posts",
       icon: "post",
     },
-    {
-      title: "Płatności",
-      href: "/dashboard/billing",
-      icon: "billing",
-    },
+    // {
+    //   title: "Płatności",
+    //   href: "/dashboard/billing",
+    //   icon: "billing",
+    // },
     {
       title: "Ustawienia",
       href: "/dashboard/settings",

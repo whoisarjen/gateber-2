@@ -38,7 +38,7 @@ export function BlogPosts({
             <h3 className="mb-2 text-balance font-heading text-2xl md:text-4xl">
               {posts[0].title}
             </h3>
-            <p className="text-balance text-muted-foreground md:text-lg line-clamp-3">
+            <p className="line-clamp-3 text-balance text-muted-foreground md:text-lg">
               {posts[0].description}
             </p>
             <Link href={`/blog/${getPostSlug(posts[0])}`} className="absolute inset-0">
