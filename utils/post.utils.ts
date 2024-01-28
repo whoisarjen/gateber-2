@@ -11,8 +11,8 @@ export const getPostIdFromSlug = (postSlug: string) => {
 }
 
 export const getPostDescription = (post: Post): string => {
-    return (post.content as unknown as OutputData)
-      .blocks
+    return ((post.content as unknown as OutputData)
+      .blocks ?? [])
       .filter(({ type }) => type === "paragraph")
       .map(({ data: { text } }) => text)
       .join()
