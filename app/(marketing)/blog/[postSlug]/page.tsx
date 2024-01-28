@@ -69,12 +69,11 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams(): Promise<PostPageProps["params"][]> {
-  return await api.posts.getPosts({ isIgnoreTakeLimit: true })
-    .then(({ posts }) => posts
-      .map(post => ({
-        postSlug: getPostSlug(post),
-      })
-    ))
+  const { posts } = await api.posts.getPosts({ isIgnoreTakeLimit: true })
+
+  return posts.map(post => ({
+    postSlug: getPostSlug(post),
+  }))
 }
 
 export default async function PostPage({
