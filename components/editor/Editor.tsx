@@ -27,13 +27,7 @@ export const Editor = ({
 }: EditorProps) => {
   const router = useRouter()
 
-  // @ts-ignore
-  const createPost = react.posts.create.useMutation({
-    onSuccess: (post) => {
-      revalidatePath('/dashboard')
-      router.push(`/dashboard/edit/${getPostSlug(post)}`)
-    }
-  })
+  const createPost = react.posts.create.useMutation()
 
   //   const updatePost = api.post.update.useMutation({
   //     onSuccess: (post) => {
@@ -135,10 +129,22 @@ export const Editor = ({
       return
     }
 
-    createPost.mutate({
+    await createPost.mutateAsync({
       ...data,
       content,
+    },
+    {
+      onSuccess: (post) => {
+        console.log({ post })
+        revalidatePath('/dashboard/posts', 'page')
+        router.push(`/dashboard/edit/${getPostSlug(post)}`)
+      }
     })
+      // .then(post => {
+      //   console.log({ post })
+      //   revalidatePath('/dashboard/posts')
+      //   router.push(`/dashboard/edit/${getPostSlug(post)}`)
+      // })
   }
 
   if (!isMounted) {
@@ -162,7 +168,7 @@ export const Editor = ({
           onClick={handleSubmit(onSubmit)}
           className={buttonVariants({})}
         >
-          {true
+          {createPost.isPending
             ? <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
             : 'Zapisz'
           }
