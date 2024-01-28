@@ -45,11 +45,25 @@ export const postsRouter = router({
   getPost: publicProcedure
     .input(z.object({
       id: z.union([z.string(), z.number()]).pipe(z.coerce.number()),
+      isOnlyPublic: z.boolean().optional().default(true),
+      isRequiredPermission: z.boolean().optional().default(false),
     }))
-    .query(async ({ input: { id } }) => {
+    .query(async ({ input: { id, isOnlyPublic } }) => {
       return await db.post.findFirstOrThrow({
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              twitter: true,
+            }
+          },
+        },
         where: {
           id,
+          ...(isOnlyPublic ? { isPublic: true } : {}),
+          // ...(isRequiredPermission ? { userId: } : {}) TODO turn it ON
         },
       })
     }),
@@ -86,14 +100,16 @@ export const postsRouter = router({
         page: z.union([z.string(), z.number()]).pipe(z.coerce.number()).optional().default(1),
         take: z.number().min(1).max(10).optional().default(10),
         isOnlyPublic: z.boolean().optional().default(true),
+        isIgnoreTakeLimit: z.boolean().optional().default(false),
         userId: z.string().optional(),
       }))
-      .query(async ({ input: { take, page, isOnlyPublic, userId } }) => {
+      .query(async ({ input: { take: takeRaw, isIgnoreTakeLimit, page, isOnlyPublic, userId } }) => {
+        const take = isIgnoreTakeLimit ? undefined : takeRaw
         const where = {
             ...(isOnlyPublic ? { isPublic: true } : {}),
             ...(userId ? { userId } : {}),
         }
-  console.log({ page })
+
         const [posts, total] = await db.$transaction([
           db.post.findMany({
             where,
@@ -107,7 +123,7 @@ export const postsRouter = router({
               },
             },
             take,
-            skip: take * (page - 1),
+            skip: (take ?? 1) * (page - 1),
           }),
           db.post.count({ where }),
         ])
@@ -116,7 +132,7 @@ export const postsRouter = router({
           posts,
           page,
           take,
-          pageCount: Math.ceil(total / take),
+          pageCount: Math.ceil(total / (take ?? 1)),
           total,
         }
       }),

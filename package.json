@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "author": {
-    "name": "mickasmt",
-    "url": "https://twitter.com/mickasmt"
+    "name": "Kamil Owczarek",
+    "url": "https://twitter.com/whoisarjen"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,6 +16,7 @@
     "preview": "next build && next start",
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
+    "db:generate": "prisma generate",
     "postinstall": "prisma generate",
     "email": "email dev --dir emails --port 3333"
   },

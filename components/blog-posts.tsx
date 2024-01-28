@@ -1,5 +1,5 @@
-import { formatDate } from '@/lib/utils';
 import { transformDate } from '@/utils/global.utils';
+import { getPostDescription, getPostSlug } from '@/utils/post.utils';
 import { type Post } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +11,13 @@ type BlogPostsProps = {
 export function BlogPosts({
   posts: postsRaw,
 }: BlogPostsProps) {
-  const posts = postsRaw.map(post => ({ ...post, image: 'https://lh3.googleusercontent.com/a/ACg8ocIZoVZYjP0T7CITvnawfqsR8hCGyRc3R66duyET1QNnxmBL=s96-c', description: '', slug: '' }))
+  const posts = postsRaw
+    .map(post => ({
+      ...post,
+      image: 'https://s1.1zoom.me/b5050/878/Footbal_Men_Ball_Jump_544060_1920x1080.jpg',
+      description: getPostDescription(post),
+    }))
+
   return (
     <div className="container space-y-10 py-6 md:py-10">
       <section>
@@ -32,12 +38,10 @@ export function BlogPosts({
             <h3 className="mb-2 text-balance font-heading text-2xl md:text-4xl">
               {posts[0].title}
             </h3>
-            {posts[0].description && (
-              <p className="text-balance text-muted-foreground md:text-lg">
-                {posts[0].description}
-              </p>
-            )}
-            <Link href={posts[0].slug} className="absolute inset-0">
+            <p className="text-balance text-muted-foreground md:text-lg line-clamp-3">
+              {posts[0].description}
+            </p>
+            <Link href={`/blog/${getPostSlug(posts[0])}`} className="absolute inset-0">
               <span className="sr-only">View Article</span>
             </Link>
           </div>
@@ -59,13 +63,11 @@ export function BlogPosts({
                 />
               )}
               <h2 className="line-clamp-1 font-heading text-2xl">{post.title}</h2>
-              {post.description && (
-                <p className="line-clamp-1 text-muted-foreground">{post.description}</p>
-              )}
+              <p className="line-clamp-1 text-muted-foreground">{post.description}</p>
               <p className="text-sm text-muted-foreground">
                 {transformDate(post.updatedAt)}
               </p>
-              <Link href={post.slug} className="absolute inset-0">
+              <Link href={`/blog/${getPostSlug(post)}`} className="absolute inset-0">
                 <span className="sr-only">Zobacz wpis</span>
               </Link>
             </article>

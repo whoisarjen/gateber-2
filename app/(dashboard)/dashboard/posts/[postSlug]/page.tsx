@@ -13,7 +13,7 @@ export default async function DashboardPostsPostSlugPage ({
         postSlug,
     },
 }: DashboardPostsPostSlugPageProps) {
-    const post = await api.posts.getPost({ id: getPostIdFromSlug(postSlug) })
+    const post = await api.posts.getPost({ id: getPostIdFromSlug(postSlug), isOnlyPublic: false, isRequiredPermission: true, })
 
     return (
         <UpdatePostEditor post={post} />
