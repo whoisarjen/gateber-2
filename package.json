@@ -20,11 +20,6 @@
     "postinstall": "prisma generate",
     "email": "email dev --dir emails --port 3333"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pnpm lint"
-    }
-  },
   "dependencies": {
     "@editorjs/editorjs": "2.29.0",
     "@editorjs/header": "2.8.1",

@@ -58,6 +58,10 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  .main-section-min-height {
+    min-height: calc(calc(100vh - theme(height.16) - theme(height.16)));
+    margin-bottom: theme(height.16);
+  }
 }
 
 .text-gradient_indigo-purple {

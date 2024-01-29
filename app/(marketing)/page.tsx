@@ -1,33 +1,15 @@
 import Link from "next/link"
 
 import { buttonVariants } from "@/components/ui/button"
-import { cn, nFormatter } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Icons } from "@/components/shared/icons"
-import { env } from "@/env.mjs"
 import { PricingCards } from "@/components/pricing-cards"
 import { PricingFaq } from "@/components/pricing-faq"
 
 export default async function IndexPage() {
-  const { stargazers_count: stars } = await fetch(
-    "https://api.github.com/repos/mickasmt/next-saas-stripe-starter",
-    {
-      ...(env.GITHUB_OAUTH_TOKEN && {
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }),
-      // data will revalidate every hour
-      next: { revalidate: 3600 },
-    },
-  )
-    .then((res) => res.json())
-    .catch((e) => console.log(e));
-
-
   return (
     <>
-      <section className="space-y-6 pb-12 pt-16 lg:py-28">
+    <section className="space-y-6 lg:py-28 main-section-min-height flex items-center justify-center">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
           <Link
             href="https://twitter.com/miickasmt/status/1719892161095745801"
@@ -66,36 +48,13 @@ export default async function IndexPage() {
             </div>
 
             <div
-              className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
+              className="animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4 flex"
               style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
             >
-              <Link href="#" className={cn(buttonVariants({ size: "lg", variant: 'outline' }))}>
+              <Link href="#features" className={cn(buttonVariants({ size: "lg", variant: 'outline' }))} id="features">
                 Dowied się więcej
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="animate-fade-up py-16 text-zinc-500 opacity-0 dark:text-zinc-400"
-        style={{ animationDelay: "0.55s", animationFillMode: "forwards" }}
-      >
-        <div className="container mx-auto">
-          <h2 className="text-center text-sm font-semibold uppercase">Dumnie wpierani przez</h2>
-
-          <div className="my-7 flex flex-wrap items-center justify-center gap-10 gap-y-8 lg:gap-14">
-            {features.map((feature) => (
-              <Link
-                target="_blank"
-                key={feature.title}
-                href={feature.href}
-                aria-label={feature.title}
-                className="flex flex-col items-center transition duration-300 hover:text-black dark:hover:text-white"
-              >
-                {feature.icon}
-              </Link>
-            ))}
           </div>
         </div>
       </section>
