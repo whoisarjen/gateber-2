@@ -190,6 +190,25 @@ export default async function IndexPage() {
         </div>
       </section>
 
+      <section className="container flex flex-col items-center text-center mb-16">
+        <div className="mx-auto flex w-full flex-col gap-8 items-center">
+          <h2 className="text-gradient_indigo-purple font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl p-0">
+            What Are You waiting For?
+          </h2>
+          {/* <h2 className="text-gradient_indigo-purple font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl">
+            Get Started Now!
+          </h2> */}
+          <p className="max-w-[42rem] text-balance leading-normal text-muted-foreground sm:text-lg sm:leading-8 p-0">
+            There are many variations of passages of Lorem Ipsum but the majority have suffered in some form.
+          </p>
+          <div className="flex justify-center space-x-2 md:space-x-4">
+            <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
+              Dołącz do Gateber
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <div className="mb-16 flex flex-col gap-16">
         <PricingCards />
         <PricingFaq />
