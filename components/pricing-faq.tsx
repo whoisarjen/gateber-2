@@ -37,7 +37,7 @@ export function PricingFaq() {
   return (
     <section className="container max-w-3xl py-2">
       <div className="mb-14 space-y-6 text-center">
-        <h1 className="text-balance text-center font-heading text-3xl md:text-5xl">
+        <h1 className="text-gradient_indigo-purple text-balance text-center font-heading text-3xl font-extrabold md:text-5xl">
           Frequently Asked Questions
         </h1>
         <p className="text-md text-balance text-muted-foreground">

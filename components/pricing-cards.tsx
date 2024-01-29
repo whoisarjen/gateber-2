@@ -30,8 +30,8 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
     <section className="container flex flex-col items-center text-center">
       <div className="mx-auto mb-10 flex w-full flex-col gap-5">
         <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Pricing</p>
-        <h2 className="font-heading text-3xl leading-[1.1] md:text-5xl">
-          Start at full speed !
+        <h2 className="text-gradient_indigo-purple font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl">
+          Start at full speed!
         </h2>
       </div>
 

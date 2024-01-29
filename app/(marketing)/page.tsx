@@ -1,10 +1,11 @@
 import Link from "next/link"
 
 import { buttonVariants } from "@/components/ui/button"
-import { siteConfig } from "@/config/site"
 import { cn, nFormatter } from "@/lib/utils"
 import { Icons } from "@/components/shared/icons"
 import { env } from "@/env.mjs"
+import { PricingCards } from "@/components/pricing-cards"
+import { PricingFaq } from "@/components/pricing-faq"
 
 export default async function IndexPage() {
   const { stargazers_count: stars } = await fetch(
@@ -98,6 +99,101 @@ export default async function IndexPage() {
           </div>
         </div>
       </section>
+
+      <section className="container mb-16 flex flex-col items-center">
+        <div className="mx-auto mb-10 flex w-full flex-col">
+          <div className="flex flex-col gap-5">
+            <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">Features</p>
+            <h2 className="text-gradient_indigo-purple font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl">
+              Main Features Of Play
+            </h2>
+            <p className="max-w-lg text-muted-foreground">
+              There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form.
+            </p>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex flex-wrap justify-around">
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Free and Open-Source</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Modern Design</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">SaaS Starter Kit</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">All Essential Integrations</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Free and Open-Source</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Modern Design</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">SaaS Starter Kit</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
+                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">All Essential Integrations</h3>
+                <p className="text-muted-foreground">
+                  Lorem Ipsum is simply dummy text of the printing and industry.
+                </p>
+                <Link href="/">
+                  Learn more
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="mb-16 flex flex-col gap-16">
+        <PricingCards />
+        <PricingFaq />
+      </div>
     </>
   )
 }
