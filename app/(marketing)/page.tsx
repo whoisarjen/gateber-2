@@ -9,7 +9,7 @@ import { PricingFaq } from "@/components/pricing-faq"
 export default async function IndexPage() {
   return (
     <>
-    <section className="space-y-6 lg:py-28 main-section-min-height flex items-center justify-center">
+    <section className="main-section-min-height flex items-center justify-center space-y-6 lg:py-28">
         <div className="container flex max-w-[64rem] flex-col items-center gap-5 text-center">
           <Link
             href="https://twitter.com/miickasmt/status/1719892161095745801"
@@ -48,7 +48,7 @@ export default async function IndexPage() {
             </div>
 
             <div
-              className="animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4 flex"
+              className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
               style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
             >
               <Link href="#features" className={cn(buttonVariants({ size: "lg", variant: 'outline' }))} id="features">
