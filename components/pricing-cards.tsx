@@ -118,7 +118,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
       </div>
 
       <p className="mt-3 text-balance text-center text-base text-muted-foreground">
-        Email <a className="font-medium text-primary hover:underline" href={`mailto:${env.NEXT_PUBLIC_ADMIN_EMAIL}`}>{env.NEXT_PUBLIC_ADMIN_EMAIL}</a> for to contact our support team.
+        <Link href="/contact">Email to contact our support team.</Link>
         <br />
         <strong>You can test the subscriptions and won&apos;t be charged.</strong>
       </p>

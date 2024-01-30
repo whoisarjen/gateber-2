@@ -10,7 +10,7 @@ export const genericRouter = router({
         .input(contactFormSchema)
         .mutation(async ({ input }) => {
             const data = await resend.emails.send({
-                from: 'delivered@resend.dev', // TODO add domain email
+                from: env.ADMIN_EMAIL, // TODO add domain email
                 to: [env.ADMIN_EMAIL],
                 subject: `${input.email} - ${input.subject}`,
                 react: input.message,
