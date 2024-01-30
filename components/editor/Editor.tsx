@@ -6,6 +6,7 @@ import { type MutableRefObject, useCallback, useEffect, useRef, useState } from 
 import { type UseFormReturn } from "react-hook-form"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from '../ui/use-toast'
+import { FormErrorToast } from '../forms/form-error-toast'
 
 type EditorProps = {
   post?: Post
@@ -53,19 +54,6 @@ export const Editor = ({
       })
     }
   }, [post?.id])
-
-  useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [_key, value] of Object.entries(errors)) {
-        value
-        toast({
-          title: 'Coś poszło nie tak.',
-          description: (value as { message: string }).message,
-          variant: "destructive",
-        })
-      }
-    }
-  }, [errors])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -123,6 +111,7 @@ export const Editor = ({
         className='reset-textarea mb-4 h-auto w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold'
       />
       <div id='editor' />
+      <FormErrorToast errors={errors} />
     </form>
   )
 }

@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { pricingData } from "@/config/subscriptions";
 import { useSigninModal } from "@/hooks/use-signin-modal";
 import { UserSubscriptionPlan } from "@/types";
+import { env } from "@/env.mjs";
 
 interface PricingCardsProps {
   userId?: string;
@@ -117,7 +118,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
       </div>
 
       <p className="mt-3 text-balance text-center text-base text-muted-foreground">
-        Email <a className="font-medium text-primary hover:underline" href="mailto:support@Gateber.com">support@Gateber.com</a> for to contact our support team.
+        Email <a className="font-medium text-primary hover:underline" href={`mailto:${env.NEXT_PUBLIC_ADMIN_EMAIL}`}>{env.NEXT_PUBLIC_ADMIN_EMAIL}</a> for to contact our support team.
         <br />
         <strong>You can test the subscriptions and won&apos;t be charged.</strong>
       </p>

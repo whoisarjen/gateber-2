@@ -7,7 +7,7 @@ export const createPostSchema = z.object({
       .string()
       .trim()
       .min(20, {
-        message: 'Tytuł musi mieć conajmniej 20 liter',
+        message: 'Tytuł musi mieć co najmniej 20 liter',
       })
       .max(128, {
         message: 'Tytuł może mieć maksymalnie 128 liter',

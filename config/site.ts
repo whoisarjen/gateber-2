@@ -13,5 +13,5 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/miickasmt",
     github: "https://github.com/mickasmt/next-saas-stripe-starter",
   },
-  mailSupport: "support@Gateber.com"
+  mailSupport: env.NEXT_PUBLIC_ADMIN_EMAIL
 }

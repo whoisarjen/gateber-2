@@ -6,8 +6,11 @@ import GoogleProvider from "next-auth/providers/google"
 import { siteConfig } from "@/config/site"
 import MagicLinkEmail from "@/emails/magic-link-email"
 import { env } from "@/env.mjs"
-import { resend } from "./email"
 import { db } from "@/server/db"
+import { Resend } from 'resend';
+
+// TODO reuse tRPC
+const resend = new Resend(env.RESEND_API_KEY);
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),

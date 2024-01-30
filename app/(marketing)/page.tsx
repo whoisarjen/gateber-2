@@ -5,13 +5,9 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/shared/icons"
 import { PricingCards } from "@/components/pricing-cards"
 import { PricingFaq } from "@/components/pricing-faq"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { FormContact } from "@/components/forms/form-contact"
 
 export default async function IndexPage() {
-  const isLoading = false
-
   return (
     <>
     <section className="main-section-min-height flex items-center justify-center space-y-6 lg:py-28">
@@ -176,57 +172,16 @@ export default async function IndexPage() {
       </div>
 
       <section className="container mb-16">
-        <div className="my-16 flex  flex-col items-center gap-16 xl:flex-row">
-          <div className="flex w-full max-w-2xl flex-col justify-center gap-8 text-center">
+        <div className="my-16 flex flex-col items-center gap-16 lg:flex-row">
+          <div className="flex flex-1 flex-col items-center gap-8 text-center">
             <h2 className="text-gradient_indigo-purple p-0 font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl">
               Potrzebujesz Czegoś Więcej?
             </h2>
             <p className="max-w-[42rem] text-balance p-0 leading-normal text-muted-foreground sm:text-lg sm:leading-8">
-              W naszym świecie innowacji, nieustannego rozwoju i nieograniczonych możliwości, wiemy, że czasem szukasz czegoś więcej. Tutaj, w Gateber, rozumiemy Twoje potrzeby i chcemy być Twoim partnerem w osiągnięciu sukcesu.
+            Wypełnij nasz formularz kontaktowy, a my skontaktujemy się z Tobą, aby zrozumieć Twoje cele i wyzwania. Nasz zespół jest gotów dostarczyć Ci spersonalizowane rozwiązania, które napędzą rozwój Twojego biznesu.
             </p>
           </div>
-          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-          <form className="flex w-full max-w-96 flex-1 flex-col gap-4">
-            <Label htmlFor="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="email@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              // {...register("email")}
-            />
-            <Label htmlFor="title">
-              Tytuł
-            </Label>
-            <Input
-              id="title"
-              placeholder="Propozycja ulepszenia Gateber"
-              disabled={isLoading}
-              // {...register("title")}
-            />
-            <Label htmlFor="message">
-              Wiadomość
-            </Label>
-            <Textarea
-              id="message"
-              placeholder="W czym możemy Ci pomóc?"
-              className="h-auto"
-              disabled={isLoading}
-              rows={8}
-              // {...register("message")}
-            />
-            <button className={cn(buttonVariants())} disabled={isLoading}>
-              {isLoading && (
-                <Icons.spinner className="mr-2 size-4 animate-spin" />
-              )}
-              Wyślij
-            </button>
-          </form>
+          <FormContact />
         </div>
       </section>
     </>
