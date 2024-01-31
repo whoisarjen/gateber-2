@@ -14,11 +14,11 @@ export default async function MarketingLayout({
   const user = await getCurrentUser()
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col justify-center">
       <Suspense fallback="...">
         <NavBar user={user} items={defaultConfig.mainNav} scroll={true} />
       </Suspense>
-      <main className="flex-1">{children}</main>
+      <main className="flex flex-1 flex-col">{children}</main>
       <SiteFooter />
     </div>
   )
