@@ -3,9 +3,7 @@ import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/shared/icons"
-import { PricingCards } from "@/components/pricing-cards"
-import { PricingFaq } from "@/components/pricing-faq"
-import { ContainerFormContact } from "./contact/page"
+import { ContainerFormContact } from "@/containers/ContainerFormContact"
 
 const FEATURES = [
   {
