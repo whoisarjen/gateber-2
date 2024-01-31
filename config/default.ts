@@ -14,5 +14,9 @@ export const defaultConfig: DefaultConfig = {
       title: "Zacznij pisać",
       href: "/dashboard/posts/create",
     },
+    {
+      title: "Kontakt",
+      href: "/contact",
+    },
   ],
 }
