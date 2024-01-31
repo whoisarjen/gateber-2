@@ -7,6 +7,49 @@ import { PricingCards } from "@/components/pricing-cards"
 import { PricingFaq } from "@/components/pricing-faq"
 import { FormContact } from "@/components/forms/form-contact"
 
+const FEATURES = [
+  {
+    header: '5 Sekund od Pisania',
+    description: 'Lorem Ipsum is simply dummy text of the printing and industry.',
+    isAvailable: true,
+  },
+  {
+    header: 'Monetyzacja na Kliknięcie',
+    description: 'To ty decydujesz czy dany wpis będzie publiczny, dostępny tylko dla obserwujących lub płatny.',
+    isAvailable: false,
+  },
+  {
+    header: 'Marka Osobista Prawem',
+    description: 'Stawiamy na Ciebie. Każdy wpis, który stworzysz będzie miał odnościniki do Twoich mediów społecznościowych.',
+    isAvailable: true,
+  },
+  {
+    header: 'Inteligentne Powiadomienia',
+    description: 'Każdy tworzony przez Ciebie materiał będzie docierał do twoich obserwujących.',
+    isAvailable: false,
+  },
+  {
+    header: 'Newsletter Nowej Generacji',
+    description: 'Obserwujący są odbiorcami Twojego Newslettera. Bez błagania o email.',
+    isAvailable: false,
+  },
+  {
+    header: 'Skuteczna Promocja',
+    description: 'Lorem Ipsum is simply dummy text of the printing and industry.',
+    isAvailable: true,
+  },
+  {
+    header: 'SEO to Nareście Przeszłość',
+    description: 'Żmudne i drogie działania SEO są przeszłością. Skupiasz się na tym, co kochasz - tworzeniu dobrych treści.',
+    isAvailable: false,
+  },
+  {
+    header: 'Każdy Zyskuje',
+    description: 'Lorem Ipsum is simply dummy text of the printing and industry.',
+    isAvailable: true,
+  },
+]
+
 export default async function IndexPage() {
   return (
     <>
@@ -73,78 +116,17 @@ export default async function IndexPage() {
           </div>
           <div className="flex flex-col">
             <div className="flex flex-wrap justify-around">
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Free and Open-Source</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Modern Design</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">SaaS Starter Kit</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">All Essential Integrations</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Free and Open-Source</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">Modern Design</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">SaaS Starter Kit</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
-              <div className="mt-16 flex w-full max-w-xs flex-col gap-5">
-                <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">All Essential Integrations</h3>
-                <p className="text-muted-foreground">
-                  Lorem Ipsum is simply dummy text of the printing and industry.
-                </p>
-                <Link href="/">
-                  Learn more
-                </Link>
-              </div>
+              {FEATURES.map(feature => (
+                <div className="mt-16 flex w-full max-w-xs flex-col gap-5" key={feature.header}>
+                  <h3 className="font-heading text-xl leading-[1.1] md:text-2xl">{feature.header}</h3>
+                  <p className="text-muted-foreground">
+                    {feature.description}
+                  </p>
+                  {!feature.isAvailable && 
+                    <p className="mt-auto text-sm font-medium uppercase tracking-widest text-muted-foreground">Wkrótce</p>
+                  }
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -153,7 +135,7 @@ export default async function IndexPage() {
       <section className="container mb-16 flex flex-col items-center text-center">
         <div className="mx-auto flex w-full flex-col items-center gap-8">
           <h2 className="text-gradient_indigo-purple p-0 font-heading text-3xl font-extrabold leading-[1.1] md:text-5xl">
-            Nad czym się zastanawiasz?
+            Nad czym się zastanawiasz?
           </h2>
           <p className="max-w-[42rem] text-balance p-0 leading-normal text-muted-foreground sm:text-lg sm:leading-8">
             W Gateber, wierzymy w siłę działań i chwytania okazji. Dlatego pytamy: Nad czym się zastanawiasz? Moment na przyspieszenie swojego sukcesu jest teraz, a my jesteśmy tu, aby Ci w tym pomóc.
